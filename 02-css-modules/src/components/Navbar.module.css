@@ -1,0 +1,134 @@
+/*
+  =============================================================
+  Estilos da Navbar com links de navegação e tema
+  =============================================================
+*/
+
+.header {
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  height: 64px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.content {
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-fg-strong);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.dot {
+  color: var(--color-accent);
+}
+
+.actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navLinks {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 6px 8px;
+}
+
+.navLink {
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: var(--color-fg);
+  font-weight: 600;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.navLink:hover {
+  transform: translateY(-1px);
+  background: var(--color-surface-3);
+}
+
+.active {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.themeToggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 10px 0 40px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 200ms ease, opacity 200ms ease;
+  color: var(--color-fg);
+}
+
+.themeToggle:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.themeToggle:hover {
+  transform: translateY(-1px);
+}
+
+.themeText {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.themeThumb {
+  position: absolute;
+  left: 6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: var(--shadow-sm);
+  transition: transform 200ms ease;
+}
+
+/* Move o polegar no tema escuro usando seletor global */
+:global([data-theme='dark']) .themeThumb {
+  transform: translateX(26px);
+}
+
+/* Opcionalmente, estilos globais para o body, que precisam de :global */
+:global(body) {
+    background-color: var(--color-surface-1);
+    color: var(--color-fg);
+    transition: background-color var(--transition-duration), color var(--transition-duration);
+}
+
+/* E para o foco */
+:global(:focus-visible) {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+}
