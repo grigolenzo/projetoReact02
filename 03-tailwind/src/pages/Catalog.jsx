@@ -1,32 +1,33 @@
 // Página de Catálogo reutilizando ProductCard e grid responsivo
-import React, { useEffect, useState } from 'react'; // Importa React e hooks
-import ProductCard from '../components/ProductCard.jsx'; // Importa o card de produto
-// A lista de produtos deve ser passada via props do App.jsx
-// Remova a lista 'initialProducts' daqui.
+import React, { useEffect, useState } from 'react';
+import ProductCard from '../components/ProductCard.jsx';
 
 // Define o componente de página de catálogo
-export default function Catalog({ products, onAdd }) { // Recebe lista de produtos e handler
-  const [loading, setLoading] = useState(true); // Estado de carregamento para skeleton
+export default function Catalog({ products, onAdd }) {
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => { // Efeito para simular atraso
-    const timer = setTimeout(() => setLoading(false), 1200); // Simula 1.2s
-    return () => clearTimeout(timer); // Limpa no unmount
-  }, []); // Executa uma vez
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
-  return ( // Retorna JSX
-    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 p-4" aria-label="Lista de produtos"> {/* Grid com rótulo acessível */}
-      {loading // Se estiver carregando
-        ? Array.from({ length: 6 }).map((_, i) => ( // Cria 6 skeletons
-            <ProductCard key={'skeleton-' + i} loading /> // Card em estado loading
-          )) // Fim do array de skeletons
-        : products.map((p) => ( // Caso contrário, renderiza produtos reais
-            <ProductCard // Componente de card
-              key={p.id} // Chave única
-              product={p} // Objeto do produto
-              onAdd={onAdd} // Chama handler de adicionar
-              buttonVariant={p.buttonVariant} // Variante do botão derivada da tag
-            /> // Fecha ProductCard
-          )) /* Fim do map de produtos */} {/* Fim do ternário */}
-    </section> // Fecha a seção
-  ); // Fim do retorno
-} // Fim do componente Catalog
+  return (
+    <section 
+      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" 
+      aria-label="Lista de produtos"
+    >
+      {loading
+        ? Array.from({ length: 6 }).map((_, i) => (
+            <ProductCard key={'skeleton-' + i} loading />
+          ))
+        : products.map((p) => (
+            <ProductCard
+              key={p.id}
+              product={p}
+              onAdd={() => onAdd(p.id)}
+              buttonVariant={p.buttonVariant}
+            />
+          ))}
+    </section>
+  );
+}

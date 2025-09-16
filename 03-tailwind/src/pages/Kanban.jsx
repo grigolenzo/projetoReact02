@@ -1,16 +1,11 @@
-// Página de Quadro Kanban com Tailwind CSS, acessibilidade e persistência
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-// Remove a importação do CSS Module
-// import styles from './Kanban.module.css';
 
-// Colunas disponíveis do quadro
 const COLUMNS = [
   { id: 'todo', name: 'Backlog' },
   { id: 'doing', name: 'Em Progresso' },
   { id: 'done', name: 'Concluído' },
 ];
 
-// Tarefas iniciais (exemplo)
 const DEFAULT_TASKS = [
   { id: 't1', title: 'Definir escopo do sprint', column: 'todo', tag: 'Planejamento' },
   { id: 't2', title: 'Levantar requisitos com o time', column: 'todo', tag: 'Descoberta' },
@@ -22,13 +17,11 @@ const DEFAULT_TASKS = [
 
 const STORAGE_KEY = 'kanban_tasks_v1';
 
-// Componente principal do Kanban
 export default function Kanban() {
   const [tasks, setTasks] = useState(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : DEFAULT_TASKS;
   });
-
   const [filter, setFilter] = useState('');
   const inputRef = useRef(null);
 
@@ -89,17 +82,17 @@ export default function Kanban() {
   const onDragOver = (e) => {
     e.preventDefault();
   };
-
-  const btnClasses = "flex items-center justify-center p-2 rounded-lg text-lg font-semibold transition-all duration-200";
+  
+  const focusRing = "focus:outline-none focus:ring-2 focus:ring-accent rounded-lg"
 
   return (
-    <div className="flex flex-col gap-4 p-4">
-      <h1 className="text-3xl font-bold text-center text-gray-900 dark:text-gray-100">
+    <div className="min-h-screen p-4 flex flex-col items-center">
+      <h1 className="text-2xl md:text-3xl font-bold text-fg-strong mb-4">
         Quadro Kanban
       </h1>
-
+      
       <form
-        className="flex flex-col md:flex-row gap-4 justify-center"
+        className="flex flex-col md:flex-row gap-4 mb-6 w-full max-w-5xl"
         onSubmit={(e) => {
           e.preventDefault();
           addTask(inputRef.current.value);
@@ -114,7 +107,7 @@ export default function Kanban() {
         <input
           id="newTask"
           ref={inputRef}
-          className="flex-1 p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
+          className={`flex-1 py-2 px-4 rounded-lg border-2 border-border-strong bg-surface ${focusRing}`}
           type="text"
           placeholder="Descreva a tarefa e pressione Enter"
           required
@@ -126,7 +119,7 @@ export default function Kanban() {
         </label>
         <input
           id="filter"
-          className="flex-1 p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
+          className={`flex-1 py-2 px-4 rounded-lg border-2 border-border-strong bg-surface ${focusRing}`}
           type="search"
           placeholder="Filtrar por título"
           value={filter}
@@ -135,27 +128,27 @@ export default function Kanban() {
         />
       </form>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" role="list" aria-label="Colunas do kanban">
+      <div className="flex flex-col md:flex-row gap-6 w-full max-w-5xl" role="list" aria-label="Colunas do kanban">
         {COLUMNS.map((col) => (
           <section
             key={col.id}
-            className="bg-gray-100 dark:bg-gray-700 rounded-xl p-4 shadow-sm dark:shadow-md transition-colors duration-200"
+            className="flex-1 flex flex-col bg-surface-2 rounded-lg p-4 transition-shadow duration-200 hover:shadow-md focus-within:shadow-md"
             onDragOver={onDragOver}
             onDrop={(e) => onDrop(e, col.id)}
             aria-labelledby={`h-${col.id}`}
             role="group"
             tabIndex={0}
           >
-            <header className="flex items-center justify-between pb-2 mb-2 border-b-2 border-dashed border-gray-300 dark:border-gray-600">
-              <h2 id={`h-${col.id}`} className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <header className="flex justify-between items-center mb-4">
+              <h2 id={`h-${col.id}`} className="text-lg font-bold text-fg-strong">
                 {col.name}
               </h2>
-              <span className="text-sm font-bold bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full" aria-label={`Total de tarefas: ${filtered.filter(t => t.column === col.id).length}`}>
+              <span className="text-sm font-semibold text-fg-strong bg-surface-3 py-1 px-2 rounded-full" aria-label={`Total de tarefas: ${filtered.filter(t => t.column === col.id).length}`}>
                 {filtered.filter(t => t.column === col.id).length}
               </span>
             </header>
 
-            <ul className="list-none pt-2 m-0 p-0 flex flex-col gap-3" role="list" aria-describedby={`d-${col.id}`}>
+            <ul className="flex-1 space-y-4" role="list" aria-describedby={`d-${col.id}`}>
               <span id={`d-${col.id}`} className="sr-only">
                 Arraste e solte tarefas ou use os botões para mover.
               </span>
@@ -163,26 +156,30 @@ export default function Kanban() {
               {filtered
                 .filter(t => t.column === col.id)
                 .map((t) => (
-                  <li key={t.id} className="cursor-grab" role="listitem">
+                  <li key={t.id} className="cursor-grab rounded-lg focus-within:ring-2 focus-within:ring-accent" role="listitem">
                     <article
-                      className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200"
+                      className="relative bg-surface p-4 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
                       draggable
                       onDragStart={(e) => onDragStart(e, t.id)}
                       onDragEnd={onDragEnd}
+                      tabIndex={0}
                       aria-grabbed="false"
+                      role="button"
                     >
-                      <div className="inline-block text-xs font-semibold px-2 py-1 rounded-full text-white bg-blue-500 dark:bg-blue-400 mb-2">
-                        {t.tag}
+                      <div className="absolute top-2 right-2 z-10">
+                        <div className="bg-accent text-white text-xs font-semibold py-1 px-2 rounded-full">
+                          {t.tag}
+                        </div>
                       </div>
 
-                      <h3 className="text-base font-medium text-gray-900 dark:text-gray-100 mb-2">
+                      <h3 className="text-base font-semibold text-fg-strong pr-10">
                         {t.title}
                       </h3>
 
-                      <div className="flex gap-2 justify-end">
+                      <div className="flex mt-4 gap-2 justify-end">
                         <button
                           type="button"
-                          className={`${btnClasses} text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600`}
+                          className={`p-2 rounded-lg text-sm font-semibold transition-colors duration-200 bg-transparent text-fg-strong hover:bg-surface-2 ${focusRing}`}
                           onClick={() => moveTask(t.id, -1)}
                           aria-label="Mover para a coluna anterior"
                           title="Mover para a coluna anterior"
@@ -191,7 +188,7 @@ export default function Kanban() {
                         </button>
                         <button
                           type="button"
-                          className={`${btnClasses} bg-blue-500 hover:bg-blue-600 text-white`}
+                          className={`p-2 rounded-lg text-sm font-semibold transition-colors duration-200 bg-accent text-white hover:bg-opacity-90 ${focusRing}`}
                           onClick={() => moveTask(t.id, +1)}
                           aria-label="Mover para a próxima coluna"
                           title="Mover para a próxima coluna"
@@ -200,7 +197,7 @@ export default function Kanban() {
                         </button>
                         <button
                           type="button"
-                          className={`${btnClasses} border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600`}
+                          className={`p-2 rounded-lg text-sm font-semibold transition-colors duration-200 bg-transparent text-accent border-2 border-accent hover:bg-accent hover:text-white ${focusRing}`}
                           onClick={() => removeTask(t.id)}
                           aria-label="Excluir tarefa"
                           title="Excluir tarefa"
