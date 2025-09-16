@@ -44,7 +44,7 @@ Para testar o projeto na sua máquina, siga os passos abaixo.
 1.  **Clone o Repositório:**
 
     ```bash
-    git clone [URL_DO_SEU_REPOSITORIO]
+    git clone [Url do git desse projeto]
     ```
 
 2.  **Navegue até a Pasta Desejada:**
