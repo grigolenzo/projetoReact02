@@ -1,12 +1,20 @@
-# React + Vite
+# 04 - Styled Components
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto de exemplo usando `styled-components`.
 
-Currently, two official plugins are available:
+- Como rodar:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+cd 04-styled-components
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+- Requisitos cobertos:
+  - Navbar fixa com toggle de tema e badge do carrinho
+  - Grid responsivo com breakpoints exatos
+  - Cards de produto com imagem 1:1, título com truncation, preço, rating e tag
+  - Skeleton loading sem layout shift
+  - Dark mode com persistência via `localStorage`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Tokens de tema estão em `src/styles/theme.js`.

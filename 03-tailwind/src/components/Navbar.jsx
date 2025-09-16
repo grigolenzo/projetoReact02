@@ -8,7 +8,7 @@ export default function Navbar({ cartCount, theme, onToggleTheme }) {
         <NavLink to="/" className="flex items-center space-x-2 text-xl font-bold focus:outline-none focus:ring-2 focus:ring-accent rounded" aria-label="Página inicial">
           <span aria-hidden="true">🛍️</span>
           <strong>Shop</strong>
-          <span className="text-accent" aria-hidden="true">.</span>
+          <span className="text-accent" aria-hidden="true">TechLoja</span>
         </NavLink>
 
         <nav className="flex items-center space-x-4" aria-label="Ações e navegação">

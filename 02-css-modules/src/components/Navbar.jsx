@@ -11,7 +11,7 @@ export default function Navbar({ cartCount, theme, onToggleTheme }) { // Declara
         <NavLink to="/" className={styles.logo} aria-label="Página inicial"> {/* Link do logo para raiz */}
           <span aria-hidden="true">🛍️</span> {/* Ícone visual */}
           <strong>Shop</strong> {/* Texto do logo */}
-          <span className={styles.dot} aria-hidden="true">.</span> {/* Ponto decorativo */}
+          <span className={styles.dot} aria-hidden="true">TechLoja</span> {/* Ponto decorativo */}
         </NavLink> {/* Fecha logo */}
 
         <nav className={styles.actions} aria-label="Ações e navegação"> {/* Ações à direita */}
