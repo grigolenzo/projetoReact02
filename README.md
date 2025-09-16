@@ -1,4 +1,3 @@
-Com certeza\! Um bom `README` é essencial para apresentar o projeto. Aqui está um texto formatado, com emojis, que você pode usar.
 
 -----
 
